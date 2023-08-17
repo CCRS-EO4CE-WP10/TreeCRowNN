@@ -8,7 +8,7 @@ This code is used to generate tiles from an image to be used in model dev or tra
     It will: 
         Divide the image to train,test,val datasets based on target %.
         Extract tiles from image and add padding (if desired).
-        Extract tiles from annotation file and compute sum of 1s for each.
+        Extract tiles from annotation file and compute sum of 1s for each to determine tree counts.
         Move image tiles to folders labelled with corresponding sum.
         Rename image tiles to include sum as filename prefix.
     
