@@ -92,7 +92,7 @@ This code executes model inference with batches on CPU
         
         OUTPUT WILL NOT BE GEOREFERENCED, please use Georeferencing script to transfer metadata for use in a GIS
 
-# TreeCRowNN FSD Map Georeferencing Module
+# TreeCRowNN Output Georeferencing Module
 This code will accept FSD and activation heatmaps for georeferencing to original input RGB image extents
 
     Parameters
