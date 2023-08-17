@@ -27,13 +27,13 @@ This code is used to generate tiles from an image to be used in model dev or tra
         target : float (default 0.2)
             Value identifying data split (train, test, val)
             E.G. A value of 0.2 represents a split (percentage) of 60/20/20
-        patch_size : int (default 128)
+        tile_size : int (default 128)
             Value identifying the desired dimensions of extracted tiles
             Enter value of -1 to randomly generate patch_size between 64-128pix
         padding : int (default 0)
             Value 0-32 identifying the desired amount of zero padding to be added to tiles
             Enter value of -1 to use random integer generator (0-32)
-            E.G. A padding value of 14 should be used when patch_size==100 to generate tiles of 128p x 128p
+            E.G. A padding value of 14 should be used when tile_size==100 to generate tiles of 128p x 128p
         
         Returns
         -------
@@ -42,7 +42,7 @@ This code is used to generate tiles from an image to be used in model dev or tra
         Tiles are:
             Split into train, test, and validation datasets 
             Organized in folders labelled with tree counts
-            Naming convention = treecount_y_x_plotsize_padding.png 
+            Naming convention = sum_y_x_tilesize_padding.png 
                 where: 
                     y = row and x = col location in img_path file
                     plotsize = ground dimensions represented in data of tile (assuming input image resolution of 10cm)
@@ -103,8 +103,8 @@ This code will accept FSD and activation heatmaps for georeferencing to original
             Location of image requiring georeferencing, either FSD or activation map
         output_raster : file path to .tif file
             File to be written
-        pix : int
-            Spatial resolution of input image (E.G. 0.1 for activation map, 64 for FSD generated with tile_size 64) 
+        tile_size : int
+            Spatial resolution of input image (E.G. 0.1 for activation map, 64-128 for FSD) 
         is_FSD : bool (default True)
             enter True to georeference FSD image
             enter False to georeference activation map
