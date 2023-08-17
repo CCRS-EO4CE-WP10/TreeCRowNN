@@ -80,7 +80,7 @@ This code executes model inference with batches on CPU
             if True, processing time per stand will increase ~4x
         normalize_heatmap : str (default none)
             enter "local", "global", or "none"
-            if local: heatmap will be normalized per stand (useful to check for border/inter-tile issues)
+            if local: heatmap will be normalized per tile (useful to check for border/inter-tile issues)
             if global: heatmap will be normalized for full input image (useful to check for domain trends)
             if none: no normalization will be applied
             
