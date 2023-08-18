@@ -50,9 +50,7 @@ This module will generate tiles from an image that can then be used in model dev
             Split into train, test, and validation datasets 
             Organized in folders labelled with tree counts
             Naming convention = sum_y_x_tilesize_padding.png 
-                where: 
-                    y = row and x = col location in img_path file
-                    plotsize = ground dimensions represented in data of tile (assuming input image resolution of 10cm)
+                where: y = row and x = col location in img_path file
         
         THE CODE INCLUDES FILTERS TO AVOID NODATA (ALL 0, ALL -9999) AND INCOMPLETE/NON-SQUARE TILES
         A THOROUGH QA/QC OF GENERATED TILES SHOULD BE COMPLETED PRIOR TO USING FOR MODEL DEV/TRANSFERRING
