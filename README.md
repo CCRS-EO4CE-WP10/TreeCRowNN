@@ -2,7 +2,7 @@
 Welcome to the Tree Convolutional Row Neural Network (Tree-CRowNN) Project! </br>
 </br>This project supports estimations of forest stand density (FSD) from high-resolution RGB aerial imagery.
 Imagery used in the initial model development is plane-based 10cm spatial resolution, collected over a mountainous region of interior BC in October 2019.
-The project contains three modules to support: 
+### The project contains three modules to support: 
 - Tile Generation
 - Model Inference
 - Georeferencing Output
