@@ -7,4 +7,4 @@ def test_main():
     runner.invoke(
         main, ["image","mask","out"]
     )
-    assert main != None
+    assert None != main
