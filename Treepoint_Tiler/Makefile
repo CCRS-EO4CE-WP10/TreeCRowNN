@@ -4,8 +4,8 @@ install:
 
 test:
 	@echo "eventually testing will be completed:"
-	python -m pytest -vv main_test.py
-	#python -m pytest -vv utils_test.py
+	python -m pytest -vv test_main.py
+	python -m pytest -vv test_utils.py
 
 format:
 	black *.py

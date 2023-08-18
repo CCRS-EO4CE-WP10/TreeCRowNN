@@ -3,7 +3,7 @@
 import tifffile as tiff
 import numpy as np
 import click
-import Treepoint_Tiler.utils as ut
+import utils as ut
 
 
 @click.command()
@@ -39,14 +39,19 @@ import Treepoint_Tiler.utils as ut
     help="enter -1 to generate tiles with random padding",
 )
 def main(img_path, mask_path, out_path, NoData, target, patch_size, padding):
-    """This tool will generate 3 channel image tiles from an input image using annotations 
+    """This tool will generate 3 channel image tiles from an input image using annotations
     as centerpoint.
     It requires an image for tiling (img_path),
     an annotation file (mask_path) and output folder to write (out_path).
 
     """
-    large_image_stack = tiff.imread(img_path)
-    large_mask_file = tiff.imread(mask_path).astype(np.uint16)
+    if out_path == "test_environment":
+        large_image_stack = img_path
+        large_mask_file = mask_path
+
+    else:
+        large_image_stack = tiff.imread(img_path)
+        large_mask_file = tiff.imread(mask_path).astype(np.uint16)
     print(
         "MULTI-CHANNEL IMAGE SHAPE : ",
         large_image_stack.shape,
@@ -79,6 +84,7 @@ def main(img_path, mask_path, out_path, NoData, target, patch_size, padding):
     tc_val = ut.crop_valset(tc_c, target)
     tc_c = None
     del tc_c
+
     print(
         "TRAINING SET   (y,x)   ==>   RGB:",
         train_stk.shape,

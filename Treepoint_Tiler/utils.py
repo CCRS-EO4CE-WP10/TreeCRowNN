@@ -22,7 +22,7 @@ def get_crop_dims(x, patch_size):
 def crop_center(
     img, cropx, cropy
 ):  # this function defines the central extent and crops input to match
-    y, x = img.shape
+    y, x = img.shape[:-1]
     startx = x // 2 - (cropx // 2)
     starty = y // 2 - (cropy // 2)
     print(startx, startx + cropx, starty, starty + cropy)
@@ -32,7 +32,7 @@ def crop_center(
 def crop_trainset(
     img, target
 ):  # this function splits the image to a defined target for training and validating (eg. 80%), currently set for x clipping because input image is landscape
-    y, x = img.shape
+    y, x = img.shape[:-1]
     print(img.shape)
     startx = 0
     endx = x
@@ -45,7 +45,7 @@ def crop_trainset(
 def crop_testset(
     img, target
 ):  # this function splits the image to a defined target for testing (eg. 20%)
-    y, x = img.shape
+    y, x = img.shape[:-1]
     startx = 0
     endx = x
     starty = 0
@@ -57,7 +57,7 @@ def crop_testset(
 def crop_valset(
     img, target
 ):  # this function splits the image to a defined target for validating (eg. 20%)
-    y, x = img.shape
+    y, x = img.shape[:-1]
     startx = 0
     endx = x
     starty = int(y * target)
@@ -69,8 +69,8 @@ def crop_valset(
 # Dataset Preparation Functions
 
 
-def prep_data(band, target, cropx, cropy):
-    bc = crop_center(band, cropx, cropy)
+def prep_data(band,target, cropx, cropy):
+    bc = crop_center(band,cropx, cropy)
     bc_train = crop_trainset(bc, target)
     bc_test = crop_testset(bc, target)
     bc_val = crop_valset(bc, target)
@@ -91,36 +91,39 @@ def split_dataset(img, target, cropx, cropy):
         test_arr.append([test])
         val_arr.append([val])
     train_arr = train_arr[0:3]
-    train_stk = np.vstack(train_arr)
+    # train_stk = np.vstack(train_arr)
     train_stk = np.einsum("kij->ijk", train_stk)
     test_arr = test_arr[0:3]
-    test_stk = np.vstack(test_arr)
+    # test_stk = np.vstack(test_arr)
     test_stk = np.einsum("kij->ijk", test_stk)
     val_arr = val_arr[0:3]
-    val_stk = np.vstack(val_arr)
+    # val_stk = np.vstack(val_arr)
     val_stk = np.einsum("kij->ijk", val_stk)
     return train_stk, test_stk, val_stk
 
 
 def make_folders(out_path):
-    isExist = os.path.exists(out_path + "train/")
-    if not isExist:
-        os.makedirs(out_path + "train/")
-    isExist = os.path.exists(out_path + "train/organized/")
-    if not isExist:
-        os.makedirs(out_path + "train/organized/")
-    isExist = os.path.exists(out_path + "test/")
-    if not isExist:
-        os.makedirs(out_path + "test/")
-    isExist = os.path.exists(out_path + "test/organized/")
-    if not isExist:
-        os.makedirs(out_path + "test/organized/")
-    isExist = os.path.exists(out_path + "val/")
-    if not isExist:
-        os.makedirs(out_path + "val/")
-    isExist = os.path.exists(out_path + "val/organized/")
-    if not isExist:
-        os.makedirs(out_path + "val/organized/")
+    if out_path == "test_environment":
+        print("No folders generated in testing")
+    else:
+        isExist = os.path.exists(out_path + "train/")
+        if not isExist:
+            os.makedirs(out_path + "train/")
+        isExist = os.path.exists(out_path + "train/organized/")
+        if not isExist:
+            os.makedirs(out_path + "train/organized/")
+        isExist = os.path.exists(out_path + "test/")
+        if not isExist:
+            os.makedirs(out_path + "test/")
+        isExist = os.path.exists(out_path + "test/organized/")
+        if not isExist:
+            os.makedirs(out_path + "test/organized/")
+        isExist = os.path.exists(out_path + "val/")
+        if not isExist:
+            os.makedirs(out_path + "val/")
+        isExist = os.path.exists(out_path + "val/organized/")
+        if not isExist:
+            os.makedirs(out_path + "val/organized/")
 
 
 def check_NoData(array):
@@ -147,8 +150,12 @@ def get_pts(mask):
 
 def make_tiles(in_path, out_path, good_pts, image, annotation, patch_size, in_pad):
     patch_list = []
+    conf_list = []
     in_path = os.path.abspath(in_path)
-    out_path = os.path.abspath(out_path)
+    if out_path == "test_environment":
+        pass
+    else:
+        out_path = os.path.abspath(out_path)
     t1 = time.time()
     for i in good_pts:
         x = int(i[1])
@@ -196,7 +203,13 @@ def make_tiles(in_path, out_path, good_pts, image, annotation, patch_size, in_pa
                 if not isExist:
                     os.makedirs(out_path_join)
                 img_name = str(ones) + "_" + filename + ".png"
-                cv2.imwrite(os.path.join(out_path_join, img_name), padded_patch)
+                if out_path == "test_environment":
+                    pass
+                else:
+                    cv2.imwrite(os.path.join(out_path_join, img_name), padded_patch)
     t2 = time.time()
     total_time = t2 - t1
-    return patch_list, total_time
+    if out_path == "test_envrionment":
+        return len(conf_list)
+    else:
+        return patch_list, total_time
