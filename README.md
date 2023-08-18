@@ -4,6 +4,8 @@ Imagery used in the initial model development is plane-based 10cm spatial resolu
 The project contains three modules to support tile generation, model inference and georeferencing.
 
 # Treepoint Tiler Module
+![alt text](https://github.com/JulieLovitt/TreeCRowNN/blob/main/Treepoint_Tiler.jpg)
+
 This code is used to generate tiles from an image to be used in model dev or transfer learning. It accepts two input: an image you wish to extract tiles from and a complementary binary raster (annotation file).
     It will: 
         Divide the image to train,test,val datasets based on target %.
