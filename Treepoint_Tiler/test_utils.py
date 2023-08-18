@@ -1,9 +1,5 @@
-from click.testing import CliRunner
 from utils import *
 import numpy as np
-import sys
-
-#sys.setrecursionlimit(10000)
 
 rand_arr = np.random.randint(0, 255, size = 16384).reshape((128,128))
 stk_arr = [rand_arr, rand_arr, rand_arr]
