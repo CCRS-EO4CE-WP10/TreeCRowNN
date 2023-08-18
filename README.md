@@ -18,7 +18,7 @@ This module will generate tiles from an image that can then be used in model dev
 - Move image tiles to folders labelled with corresponding sum.
 - Rename image tiles to include sum as filename prefix.
 
-![alt text](https://github.com/JulieLovitt/TreeCRowNN/blob/main/Treepoint_Tiler.jpg)
+![alt text](https://github.com/JulieLovitt/TreeCRowNN/blob/main/Treepoint_Tiler/Treepoint_Tiler.jpg)
 
 ## [Requirements](https://github.com/JulieLovitt/TreeCRowNN/blob/main/Treepoint_Tiler/requirements.txt)
 ## Main Module Info:
