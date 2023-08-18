@@ -4,15 +4,19 @@ Imagery used in the initial model development is plane-based 10cm spatial resolu
 The project contains three modules to support tile generation, model inference and georeferencing.
 
 # [Treepoint Tiler Module](https://github.com/JulieLovitt/TreeCRowNN/tree/main/Treepoint_Tiler)
-This code is used to generate tiles from an image to be used in model dev or transfer learning. It accepts two input: an image you wish to extract tiles from and a complementary binary raster (annotation file).
-    It will: 
-        Divide the image to train,test,val datasets based on target %.
-        Extract tiles from image and add padding (if desired).
-        Extract tiles from annotation file and compute sum of 1s for each to determine tree counts.
-        Move image tiles to folders labelled with corresponding sum.
-        Rename image tiles to include sum as filename prefix.
+This module will generate tiles from an image that can then be used in model development or transfer learning. 
+<br/>It accepts two input: an image you wish to extract tiles from and a complementary binary raster (annotation file).
+<br/> It will: 
+- Divide the image to train,test,val datasets based on target %.
+- Extract tiles from image and add padding (if desired).
+- Extract tiles from annotation file and compute sum of 1s for each to determine tree counts.
+- Move image tiles to folders labelled with corresponding sum.
+- Rename image tiles to include sum as filename prefix.
 
 ![alt text](https://github.com/JulieLovitt/TreeCRowNN/blob/main/Treepoint_Tiler.jpg)
+
+## [Requirements](https://github.com/JulieLovitt/TreeCRowNN/blob/main/Treepoint_Tiler/requirements.txt)
+## Main Module Info:
     
     Parameters
         ----------
