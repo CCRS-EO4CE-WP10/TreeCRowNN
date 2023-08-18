@@ -2,6 +2,7 @@
 This project supports estimations of forest stand density (FSD) from high-resolution RGB aerial imagery.
 Imagery used in the initial model development is plane-based 10cm spatial resolution, collected over a mountainous region of interior BC.
 The project contains three modules to support tile generation, model inference and georeferencing.
+## [License](https://github.com/JulieLovitt/TreeCRowNN/blob/main/LICENSE)
 
 # [Treepoint Tiler Module](https://github.com/JulieLovitt/TreeCRowNN/tree/main/Treepoint_Tiler)
 This module will generate tiles from an image that can then be used in model development or transfer learning. 
