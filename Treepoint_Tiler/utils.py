@@ -103,27 +103,24 @@ def split_dataset(img, target, cropx, cropy):
 
 
 def make_folders(out_path):
-    if out_path == "test_environment":
-        print("No folders generated in testing")
-    else:
-        isExist = os.path.exists(out_path + "train/")
-        if not isExist:
-            os.makedirs(out_path + "train/")
-        isExist = os.path.exists(out_path + "train/organized/")
-        if not isExist:
-            os.makedirs(out_path + "train/organized/")
-        isExist = os.path.exists(out_path + "test/")
-        if not isExist:
-            os.makedirs(out_path + "test/")
-        isExist = os.path.exists(out_path + "test/organized/")
-        if not isExist:
-            os.makedirs(out_path + "test/organized/")
-        isExist = os.path.exists(out_path + "val/")
-        if not isExist:
-            os.makedirs(out_path + "val/")
-        isExist = os.path.exists(out_path + "val/organized/")
-        if not isExist:
-            os.makedirs(out_path + "val/organized/")
+    isExist = os.path.exists(out_path + "train/")
+    if not isExist:
+        os.makedirs(out_path + "train/")
+    isExist = os.path.exists(out_path + "train/organized/")
+    if not isExist:
+        os.makedirs(out_path + "train/organized/")
+    isExist = os.path.exists(out_path + "test/")
+    if not isExist:
+        os.makedirs(out_path + "test/")
+    isExist = os.path.exists(out_path + "test/organized/")
+    if not isExist:
+        os.makedirs(out_path + "test/organized/")
+    isExist = os.path.exists(out_path + "val/")
+    if not isExist:
+        os.makedirs(out_path + "val/")
+    isExist = os.path.exists(out_path + "val/organized/")
+    if not isExist:
+        os.makedirs(out_path + "val/organized/")
 
 
 def check_NoData(array):
@@ -152,10 +149,7 @@ def make_tiles(in_path, out_path, good_pts, image, annotation, patch_size, in_pa
     patch_list = []
     conf_list = []
     in_path = os.path.abspath(in_path)
-    if out_path == "test_environment":
-        pass
-    else:
-        out_path = os.path.abspath(out_path)
+    out_path = os.path.abspath(out_path)
     t1 = time.time()
     for i in good_pts:
         x = int(i[1])
@@ -203,13 +197,7 @@ def make_tiles(in_path, out_path, good_pts, image, annotation, patch_size, in_pa
                 if not isExist:
                     os.makedirs(out_path_join)
                 img_name = str(ones) + "_" + filename + ".png"
-                if out_path == "test_environment":
-                    pass
-                else:
-                    cv2.imwrite(os.path.join(out_path_join, img_name), padded_patch)
+                cv2.imwrite(os.path.join(out_path_join, img_name), padded_patch)
     t2 = time.time()
     total_time = t2 - t1
-    if out_path == "test_envrionment":
-        return len(conf_list)
-    else:
-        return patch_list, total_time
+    return patch_list, total_time
