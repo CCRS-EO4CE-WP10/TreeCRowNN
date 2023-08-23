@@ -183,7 +183,7 @@ def make_tiles(in_path, out_path, good_pts, image, annotation, patch_size, in_pa
         b2 = check_NoData(b2)
         b3 = check_NoData(b3)
         if np.all(b1 != -9999) and np.all(b2 != -9999) and np.all(b3 != -9999):
-            array = [b1, b2, b3]
+            array = [b3, b2, b1]
             patch = np.dstack(array)
             padded_patch = cv2.copyMakeBorder(
                 patch, pad, pad, pad, pad, cv2.BORDER_CONSTANT, value=0
