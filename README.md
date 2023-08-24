@@ -104,6 +104,8 @@ This code executes model inference with batches on CPU
 # [TreeCRowNN Output Georeferencing Module](https://github.com/JulieLovitt/TreeCRowNN/tree/main/TreeCRowNN_Georeferencing)
 This code will accept FSD and activation heatmaps for georeferencing to original input RGB image extents
 
+## [Requirements](https://github.com/JulieLovitt/TreeCRowNN/blob/main/TreeCRowNN_Georeferencing/requirements.txt)
+## Main Module Info:
     Parameters
         ----------
         geo_path : file path to .tif file
@@ -119,7 +121,7 @@ This code will accept FSD and activation heatmaps for georeferencing to original
             enter False to georeference activation map (same spatial resolution as RGB input)
      Returns
         -------
-        One georeferenced array saved to .tif file as directed by output_raster settings
+        One georeferenced array saved to .tif file as directed by out_path settings
         
 
             
