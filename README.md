@@ -101,25 +101,27 @@ This code executes model inference with batches on CPU
         
         OUTPUT WILL NOT BE GEOREFERENCED, please use Georeferencing script to transfer metadata for use in a GIS
 
-# TreeCRowNN Output Georeferencing Module
+# [TreeCRowNN Output Georeferencing Module](https://github.com/JulieLovitt/TreeCRowNN/tree/main/TreeCRowNN_Georeferencing)
 This code will accept FSD and activation heatmaps for georeferencing to original input RGB image extents
 
+## [Requirements](https://github.com/JulieLovitt/TreeCRowNN/blob/main/TreeCRowNN_Georeferencing/requirements.txt)
+## Main Module Info:
     Parameters
         ----------
-        path_to_georef_raster : file path to .tif file
+        geo_path : file path to .tif file
             Location of image with georeferencing, 3-band (RGB) used as input to inference script
-        path_to_raster_with_data : file path to .tif file
+        data_path : file path to .tif file
             Location of image requiring georeferencing, either FSD or activation map
-        output_raster : file path to .tif file
+        out_path : file path to .tif file
             File to be written
         tile_size : int
             Spatial resolution of input image (E.G. 0.1 for activation map, 64-128 for FSD) 
         is_FSD : bool (default True)
-            enter True to georeference FSD image
-            enter False to georeference activation map
+            enter True to georeference FSD image (coarser spatial resolution)
+            enter False to georeference activation map (same spatial resolution as RGB input)
      Returns
         -------
-        One georeferenced array saved to .tif file as directed by output_raster settings
+        One georeferenced array saved to .tif file as directed by out_path settings
         
 
             
