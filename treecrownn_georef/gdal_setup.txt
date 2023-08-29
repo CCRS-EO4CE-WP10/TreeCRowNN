@@ -1,4 +1,4 @@
-#before activating venv you must install GDAL on host
+#before activating venv you must install GDAL
 #use the following commands to do so:
 
 sudo apt-add-repository ppa:ubuntugis/ubuntugis-unstable
