@@ -109,6 +109,8 @@ This model leverages zero padding to generate FSD estimates at any scale between
             Location where model output will be written 
         site : str
             Name to be given to model output 
+        mod : str
+            Enter either v1 or v2 to choose TreeCRowNN model 
         NoData : int/float (default -9999)
             Value of NoData in img file 
         tile_size : int
