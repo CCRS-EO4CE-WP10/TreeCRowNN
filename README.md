@@ -1,6 +1,8 @@
 # TreeCRowNN Project
-Welcome to the Tree Convolutional Row Neural Network (Tree-CRowNN) Project! </br>
-</br>This project supports estimations of forest stand density (FSD) from high-resolution RGB aerial imagery.
+Welcome to the Tree Convolutional Row Neural Network (Tree-CRowNN) Project!   
+  
+This project supports estimations of forest stand density (FSD) from high-resolution RGB aerial imagery. In this case "forest" density is defined as the count of individual green tree tops that can be identified in 10cm resolution imagery. It does not include standing dead wood, understory/shrubby vegetation, or tree species with diffuse canopy that cannot be easily distinguished from ground at 10cm scale.
+  
 Imagery used in the initial model development is plane-based 10cm spatial resolution, collected over a mountainous region of interior BC in October 2019.
 ### The project contains three modules to support: 
 - Tile Generation
@@ -9,14 +11,15 @@ Imagery used in the initial model development is plane-based 10cm spatial resolu
 ## [License](https://github.com/JulieLovitt/TreeCRowNN/blob/main/LICENSE)
 
 # [Treepoint Tiler Module](https://github.com/JulieLovitt/TreeCRowNN/tree/main/Treepoint_Tiler)
-This module will generate tiles from an image that can then be used in model development or transfer learning. 
-<br/>It accepts two input: an image you wish to extract tiles from and a complementary binary raster (annotation file).
-<br/> It will: 
-- Divide the image to train,test,val datasets based on target %.
-- Extract tiles from image and add padding (if desired).
-- Extract tiles from annotation file and compute sum of 1s for each to determine tree counts.
-- Move image tiles to folders labelled with corresponding sum.
-- Rename image tiles to include sum as filename prefix.
+This module will generate tiles from an image that can then be used in model development or transfer learning.   
+It accepts two input: an image you wish to extract tiles from and a complementary binary raster (annotation file). 
+  
+It will: 
+1. Divide the image to train,test,val datasets based on target %.
+2. Extract tiles from image and add padding (if desired).
+3. Extract tiles from annotation file and compute sum of 1s for each to determine tree counts.
+4. Move image tiles to folders labelled with corresponding sum.
+5. Rename image tiles to include sum as filename prefix.
 
 ![alt text](https://github.com/JulieLovitt/TreeCRowNN/blob/main/Treepoint_Tiler/Treepoint_Tiler.jpg)
 
@@ -60,8 +63,44 @@ This module will generate tiles from an image that can then be used in model dev
         A THOROUGH QA/QC OF GENERATED TILES SHOULD BE COMPLETED PRIOR TO USING FOR MODEL DEV/TRANSFERRING
 
 # TreeCRowNN Inference Module
-This code executes model inference with batches on CPU
+This code executes model inference with batches on CPU. It accepts one input: the 10cm RGB image you wish to run inference on.
+  
+We provide access to multiple model versions as they are developed. Please note accuracy and settings are different between models. 
+Be careful to select the model that best fits your needs. **Models will require validation on new datasets and forest types.** 
+The Treepoint Tiler module can be used to generate tiles from new annotated datasets to facilitate transfer learning or fine-tuning.
+  
+## Tree-CRowNNv1:
+The original model as described in our article: *currently in review, link pending*.   
+This model generates predictions of FSD at 12.8m resolution and cannot accept padded input.   
+  
+**Accuracy on Testset:**  
+|*n*|Tile Size|Forest Stand Area (m<sup>2</sup>)|True Total Tree Count|Predicted Total Tree Count|diff|MAE|RMSE|R<sup>2</sup>|
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|7,547|128|163.84|  126,626 |   |  |2.1|2.7|0.74|
+  
+**Assessment of Accuracy Across Forest Conditions:**      
+|*n*|Forest Condition |MAE| MSE|RMSE|R<sup>2</sup>|
+|:---:|:---|:---:|:---:|:---:|:---:|
+|20|1: Sparse |2.7|12.0|3.5| - |
+|20|2: Immature|1.8|6.0|2.4| - |
+|20|3a: Mature, heterogenous mix|1.1|3.3|1.8|  - |
+|20|3b: Mature, homogenous mix|2.4|14.7|3.8| - |
+|20|4: Undisturbed|2.5|9.8|3.1| - |
+|100|ALL|2.1|9.1|3.0|0.87
+  
+## Tree-CRowNNv2:  
+This model leverages zero padding to generate FSD estimates at any scale between 6.4m and 12.8m.  
+  
+**Accuracy Across Padding Levels and on Combined Dataset (all 128 + all random padding):**  
+|*n*|Tile Size |Forest Stand Area (m<sup>2</sup>)| True Total Tree Count| Predicted Total Tree Count| diff| MAE|RMSE|R<sup>2</sup>| 
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+|7,905|64|40.96|35,827|27,109|-8,718|1.24|1.62| - |
+|7,515|96|92.16|72,341|67,602|-4,739|1.53|2.18| - |
+|7,547|128|163.84|126,626|123,580|-3,046|1.84|2.42|0.79|
+|14,926|Combo|various|199,610|193,136|-6,474|1.60|2.15|0.88|
 
+  ## Requirements
+  ## Main Module Info:
     Parameters
         ----------
         img_path : file path to .tif file
