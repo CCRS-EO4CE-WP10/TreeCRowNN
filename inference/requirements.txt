@@ -1,0 +1,6 @@
+Pillow==9.0.1
+keras==2.8.0
+matplotlib==3.5.1
+numpy==1.21.5
+tensorflow==2.8.0
+tifffile==2021.7.2
