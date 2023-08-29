@@ -83,8 +83,8 @@ This model generates predictions of FSD at 12.8m resolution and cannot accept pa
 |:---:|:---|:---:|:---:|:---:|:---:|
 |20|1: Sparse |2.7|12.0|3.5| - |
 |20|2: Immature|1.8|6.0|2.4| - |
-|20|3a: Mature, heterogenous mix|1.1|3.3|1.8|  - |
-|20|3b: Mature, homogenous mix|2.4|14.7|3.8| - |
+|20|3a: Mature, homogenous mix|1.1|3.3|1.8|  - |
+|20|3b: Mature, heterogenous mix|2.4|14.7|3.8| - |
 |20|4: Undisturbed|2.5|9.8|3.1| - |
 |100|ALL|2.1|9.1|3.0|0.87
   
