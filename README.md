@@ -10,7 +10,7 @@ Imagery used in the initial model development is plane-based 10cm spatial resolu
 - Georeferencing Output
 ## [License](https://github.com/JulieLovitt/TreeCRowNN/blob/main/LICENSE)
 
-# [Treepoint Tiler Module](https://github.com/JulieLovitt/TreeCRowNN/tree/main/Treepoint_Tiler)
+# [Treepoint Tiler Module](https://github.com/JulieLovitt/TreeCRowNN/tree/main/treepoint_tiler)
 This module will generate tiles from an image that can then be used in model development or transfer learning.   
 It accepts two input: an image you wish to extract tiles from and a complementary binary raster (annotation file). 
   
@@ -21,9 +21,9 @@ It will:
 4. Move image tiles to folders labelled with corresponding sum.
 5. Rename image tiles to include sum as filename prefix.
 
-![alt text](https://github.com/JulieLovitt/TreeCRowNN/blob/main/Treepoint_Tiler/Treepoint_Tiler.jpg)
+![alt text](https://github.com/JulieLovitt/TreeCRowNN/blob/main/treepoint_tiler/Treepoint_Tiler.jpg)
 
-## [Requirements](https://github.com/JulieLovitt/TreeCRowNN/blob/main/Treepoint_Tiler/requirements.txt)
+## [Requirements](https://github.com/JulieLovitt/TreeCRowNN/blob/main/treepoint_tiler/requirements.txt)
 ## Main Module Info:
     
     Parameters
@@ -62,7 +62,7 @@ It will:
         THE CODE INCLUDES FILTERS TO AVOID NODATA (ALL 0, ALL -9999) AND INCOMPLETE/NON-SQUARE TILES
         A THOROUGH QA/QC OF GENERATED TILES SHOULD BE COMPLETED PRIOR TO USING FOR MODEL DEV/TRANSFERRING
 
-# TreeCRowNN Inference Module
+# [TreeCRowNN Inference Module](https://github.com/JulieLovitt/TreeCRowNN/tree/main/inference)
 This code executes model inference with batches on CPU. It accepts one input: the 10cm RGB image you wish to run inference on.
   
 We provide access to multiple model versions as they are developed. Please note accuracy and settings are different between models. 
@@ -99,7 +99,7 @@ This model leverages zero padding to generate FSD estimates at any scale between
 |7,457|128|163.84|126,626|123,580|-3,046|1.84|2.42|0.79|
 |14,926|Combo|various|199,610|193,136|-6,474|1.60|2.15|0.88|
 
-  ## Requirements
+  ## [Requirements](https://github.com/JulieLovitt/TreeCRowNN/blob/main/inference/requirements.txt)
   ## Main Module Info:
     Parameters
         ----------
@@ -142,10 +142,10 @@ This model leverages zero padding to generate FSD estimates at any scale between
         
         OUTPUT WILL NOT BE GEOREFERENCED, please use Georeferencing script to transfer metadata for use in a GIS
 
-# [TreeCRowNN Output Georeferencing Module](https://github.com/JulieLovitt/TreeCRowNN/tree/main/TreeCRowNN_Georeferencing)
+# [TreeCRowNN Output Georeferencing Module](https://github.com/JulieLovitt/TreeCRowNN/tree/main/treecrownn_georef)
 This code will accept FSD and activation heatmaps for georeferencing to original input RGB image extents
 
-## [Requirements](https://github.com/JulieLovitt/TreeCRowNN/blob/main/TreeCRowNN_Georeferencing/requirements.txt)
+## [Requirements](https://github.com/JulieLovitt/TreeCRowNN/blob/main/treecrownn_georef/requirements.txt)
 ## Main Module Info:
     Parameters
         ----------
