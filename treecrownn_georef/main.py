@@ -5,6 +5,7 @@ import click
 
 driver = gdal.GetDriverByName("GTiff")
 
+
 @click.command()
 @click.argument("geo_path", type=click.Path(exists=True))
 @click.argument("data_path", type=click.Path(exists=True))
@@ -23,6 +24,21 @@ driver = gdal.GetDriverByName("GTiff")
     type=bool,
     help="True = data is FSD map, False = data is activation map",
 )
+def get_window_crop(
+    img, tile_size
+):  # this function crops the image with metadata to match inference extents, as per inference cropping process
+    # from rasterio docs: Window(col_off, row_off, width, height)
+    x = img.width
+    y = img.height
+    cropx = round(int(x / tile_size), 0) * tile_size
+    cropy = round(int(y / tile_size), 0) * tile_size
+    startx = x // 2 - (cropx // 2)
+    starty = y // 2 - (cropy // 2)
+    print(startx, startx + cropx, starty, starty + cropy)
+    window = Window(startx, starty, cropx, cropy)
+    return window
+
+
 def main(geo_path, data_path, out_path, tile_size, is_FSD):
     raster_with_ref = rasterio.open(geo_path)
     input_crs = raster_with_ref.crs
@@ -45,6 +61,9 @@ def main(geo_path, data_path, out_path, tile_size, is_FSD):
         input_gt[4],
         "m",
     )
+    ras = get_window_crop(raster_with_ref, tile_size)
+    newxo = input_gt[2] + (((raster_with_ref.width - ras.width) / 2) * input_gt[0])
+    newyo = input_gt[5] + (((raster_with_ref.height - ras.height) / 2) * input_gt[4])
 
     if is_FSD == True:
         ground_resolution = tile_size / 10
@@ -52,7 +71,7 @@ def main(geo_path, data_path, out_path, tile_size, is_FSD):
         ground_resolution = input_gt[0]
 
     rescale = rasterio.transform.from_origin(
-        input_gt[2], input_gt[5], ground_resolution, ground_resolution
+        newxo, newyo, ground_resolution, ground_resolution
     )
     raster_with_data = rasterio.open(data_path)
     raster_array_with_data = raster_with_data.read()
@@ -76,7 +95,7 @@ def main(geo_path, data_path, out_path, tile_size, is_FSD):
 
             with rasterio.open(
                 out_path, "w", **kwargs
-            ) as dst:  # defining output image and referencing updated kwargs
+            ) as dst:  
                 dst.write(raster_with_data.read())
 
     else:
@@ -95,7 +114,7 @@ def main(geo_path, data_path, out_path, tile_size, is_FSD):
             print(kwargs)
             with rasterio.open(
                 out_path, "w", **kwargs
-            ) as dst:  # defining output image and referencing updated kwargs
+            ) as dst:  
                 dst.write(raster_with_data.read())
 
 
