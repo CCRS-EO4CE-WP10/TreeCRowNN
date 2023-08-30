@@ -1,16 +1,11 @@
 #!/usr/bin/env python
 
 import utils as ut
-import os, sys, PIL, time
+import os
 import numpy as np
 import tifffile as tiff
-from PIL import Image
-
-Image.MAX_IMAGE_PIXELS = 5000000000
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
 import tensorflow as tf
-from tensorflow import keras
-from keras import backend as K
 
 print(tf.__version__)
 print(f"Tensorflow ver. {tf.__version__}")
@@ -106,23 +101,22 @@ def main(
     b1 = img[0]
     b2 = img[1]
     b3 = img[2]
-    b1 = crop_image(b1, tile_size)
-    b2 = crop_image(b2, tile_size)
-    b3 = crop_image(b3, tile_size)
+    b1 = ut.crop_image(b1, tile_size)
+    b2 = ut.crop_image(b2, tile_size)
+    b3 = ut.crop_image(b3, tile_size)
     array = [b3, b2, b1]
     img = np.dstack(array)
     b1 = b2 = b3 = array = None
     del (b1, b2, b3, array)
     print(img.min(), img.max())
     y, x, chan = img.shape
-    big_x = round(int(x / tile_size), 0)
-    cropx = big_x * tile_size
-    big_y = round(int(y / tile_size), 0)
-    cropy = big_y * tile_size
+    big_x = round(int(x / tile_size), 0)#cropx = big_x * tile_size
+    big_y = round(int(y / tile_size), 0)#cropy = big_y * tile_size
     blank_img = np.zeros([big_y, big_x], dtype=int)
     blank_img2 = np.zeros([y, x], dtype=np.float32)
     print(blank_img.shape, blank_img2.shape)
 
+    #model selection process pending
     if model == v1:
         model = tc_model1(lr, spe, u, u2, u3)
         model.load_weights(path_to_weights1)
@@ -130,7 +124,7 @@ def main(
         model = tc_model2(lr, spe, u, u2, u3)
         model.load_weights(path_to_weights2)
 
-    T2 = create_image(
+    T2 = ut.create_image(
         img,
         blank_img,
         blank_img2,
@@ -162,7 +156,6 @@ def main(
         str(os.path.join(out_path + site + "_totaltrees_" + total_trees + ".tif")),
         blank_img,
     )
-    normalize_heatmap = "global"
     # write activation map if requested
     if generate_heatmap == True:
         if normalize_heatmap == "local":
