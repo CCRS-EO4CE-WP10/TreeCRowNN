@@ -1,0 +1,13 @@
+PIL==9.1.1
+cv2==4.5.5
+ipynb
+matplotlib==3.7.1
+numpy==1.23.0
+pandas==2.0.1
+session_info==1.0.0
+tifffile==2022.5.4
+IPython==8.4.0
+jupyter_client==6.1.12
+jupyter_core==4.10.0
+jupyterlab==3.4.4
+notebook==6.4.12
