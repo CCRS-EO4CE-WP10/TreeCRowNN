@@ -1,9 +1,9 @@
 # TreeCRowNN Project
 Welcome to the Tree Convolutional Row Neural Network (Tree-CRowNN) Project!   
   
-This project supports estimations of forest stand density (FSD) from high-resolution RGB aerial imagery. In this case "forest" density is defined as the count of individual green tree tops that can be identified in 10cm resolution imagery. It does not include standing dead wood, understory/shrubby vegetation, or tree species with diffuse canopy that cannot be easily distinguished from ground at 10cm scale.
+This project supports estimations of forest stand density (FSD) from high-resolution RGB aerial imagery. In this case "forest" density is defined as the count of individual green tree tops that can be identified in 10cm resolution imagery. It does not include standing dead wood, understory/shrubby vegetation, or tree species with diffuse canopy that cannot be easily distinguished from ground at 10cm scale. The models developed under this project are meant to support mapping wtihin forested areas and not to distinguish between forest and non-forest.
   
-Imagery used in the initial model development is plane-based 10cm spatial resolution, collected over a mountainous region of interior BC in October 2019.
+Imagery used in the initial model development is plane-based 10cm spatial resolution, collected over a mountainous region of interior BC in October 2019. Model version 2 includes drone imagery collected in 2021 and 2022 over five other sites: 2 upland forests and 1 treed bog in ON and 2 fens in AB.
 ### The project contains three modules to support: 
 - Tile Generation
 - Model Inference
@@ -11,6 +11,7 @@ Imagery used in the initial model development is plane-based 10cm spatial resolu
 ## [License](https://github.com/JulieLovitt/TreeCRowNN/blob/main/LICENSE)
 
 # [Treepoint Tiler Module](https://github.com/JulieLovitt/TreeCRowNN/tree/main/treepoint_tiler)
+## [Notebooks](https://github.com/JulieLovitt/TreeCRowNN/tree/main/treepoint_tiler/notebooks)
 This module will generate tiles from an image that can then be used in model development or transfer learning.   
 It accepts two input: an image you wish to extract tiles from and a complementary binary raster (annotation file). 
   
@@ -63,6 +64,7 @@ It will:
         A THOROUGH QA/QC OF GENERATED TILES SHOULD BE COMPLETED PRIOR TO USING FOR MODEL DEV/TRANSFERRING
 
 # [TreeCRowNN Inference Module](https://github.com/JulieLovitt/TreeCRowNN/tree/main/inference)
+## [Notebooks](https://github.com/JulieLovitt/TreeCRowNN/tree/main/inference/notebooks)
 This code executes model inference with batches on CPU. It accepts one input: the 10cm RGB image you wish to run inference on.
   
 We provide access to multiple model versions as they are developed. Please note accuracy and settings are different between models. 
@@ -94,10 +96,10 @@ This model leverages zero padding to generate FSD estimates at any scale between
 **Accuracy Across Padding Levels and on Combined Dataset (all 128 + all random padding):**  
 |*n*|Tile Size |Forest Stand Area (m<sup>2</sup>)| True Total Tree Count| Predicted Total Tree Count| diff| MAE|RMSE|R<sup>2</sup>| 
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|7,905|64|40.96|35,827|27,109|-8,718|1.24|1.62| - |
-|7,515|96|92.16|72,341|67,602|-4,739|1.53|2.18| - |
-|7,457|128|163.84|126,626|123,580|-3,046|1.84|2.42|0.79|
-|14,926|Combo|various|199,610|193,136|-6,474|1.60|2.15|0.88|
+|7,905|64|40.96|35,827|35,435|-392|0.95|1.31| - |
+|7,515|96|92.16|72,341|65,749|-6,592|1.63|2.25| - |
+|7,457|128|163.84|126,626|123,540|-3,086|2.22|2.98|0.69|
+|14,926|Combo|various|199,610|193,084|-6,526|1.86|2.59|0.83|
 
   ## [Requirements](https://github.com/JulieLovitt/TreeCRowNN/blob/main/inference/requirements.txt)
   ## Main Module Info:
@@ -110,7 +112,7 @@ This model leverages zero padding to generate FSD estimates at any scale between
         site : str
             Name to be given to model output 
         mod : str
-            Enter either v1 or v2 to choose TreeCRowNN model 
+            Enter either "v1" or "v2" to choose TreeCRowNN model 
         NoData : int/float (default -9999)
             Value of NoData in img file 
         tile_size : int
@@ -143,6 +145,7 @@ This model leverages zero padding to generate FSD estimates at any scale between
         OUTPUT WILL NOT BE GEOREFERENCED, please use Georeferencing script to transfer metadata for use in a GIS
 
 # [TreeCRowNN Output Georeferencing Module](https://github.com/JulieLovitt/TreeCRowNN/tree/main/treecrownn_georef)
+## [Notebooks](https://github.com/JulieLovitt/TreeCRowNN/tree/main/treecrownn_georef/notebooks)
 This code will accept FSD and activation heatmaps for georeferencing to original input RGB image extents
 
 ## [Requirements](https://github.com/JulieLovitt/TreeCRowNN/blob/main/treecrownn_georef/requirements.txt)
