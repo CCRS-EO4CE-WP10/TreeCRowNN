@@ -113,14 +113,16 @@ This model leverages zero padding to generate FSD estimates at any scale between
             Name to be given to model output 
         mod : str
             Enter either "v1" or "v2" to choose TreeCRowNN model 
+        path_to_weights : file path to .h5 file
+            Location of weights for your selected model
+        rgba_out : folder path
+            Location to save tiles as stacked RGB + heatmap (rgba) .png files
+            Tiles will be organized into folders labelled with predicted tree count and ready to be used in subsequent model dev
         NoData : int/float (default -9999)
             Value of NoData in img file 
         tile_size : int
             Value identifying desired forest stand size 
             E.G. TreeCRowNN accepts tiles with size 128, either use this or padding to achieve correct tile dimensions
-        patch_size : int
-            Value identifying the desired dimensions of extracted tiles
-            E.G. A value of 0 should be used for tiles with dimension 128pix X 128pix
         batch_size : int (default 100)
             Size of batch to be sent to model for inference
         minval : int (default 0)
@@ -130,17 +132,29 @@ This model leverages zero padding to generate FSD estimates at any scale between
         generate_heatmap : bool (default False)
             enter True to generate activation map in addition to FSD map
             if True, processing time per stand will increase ~4x
+        heatmap_algo : str (default cgc)
+            select algorithm to use in generating activation heatmap
+            enter "gc" for Grad-CAM, "cgc" for Custom Grad-CAM, or "gcpp" for Grad-CAM++
+            the cgc algorithm combines Grad-CAM visualizations from two convolutional layers
+        target_layer1 : str (default "batch_normalization_23")
+            convolutional layer to be used in generating activation maps with gc and gcpp algorithms
+        target_layer2 : str (default "batch_normalization_13")
+            convolutional layer to be used in combination with target_layer1 in generating activation map with "cgc" algorithm
+            the Grad-CAM activation map from this layer will be multiplied by 3 and added to the Grad-CAM activation map of target_layer1
         normalize_heatmap : str (default none)
             enter "local", "global", or "none"
             if local: heatmap will be normalized per tile (useful to check for border/inter-tile issues)
             if global: heatmap will be normalized for full input image (useful to check for domain trends)
             if none: no normalization will be applied
+        generate_rgba : bool (default False)
+            enter True to generate rgba tiles (RGB+heatmap stack)
             
     Returns
         -------
         Array with predictions entered as integers, this array saved to .tif file in out_path location
         Activation heatmaps if requested, PLEASE NOTE: GENERATING HEATMAPS INCREASES PROCESSING TIME ~4x
         Inference processing time in seconds
+        RGB+heatmap tiles if requested, tiles will be organized into folders labelled with predicted tree counts
         
         OUTPUT WILL NOT BE GEOREFERENCED, please use Georeferencing script to transfer metadata for use in a GIS
 
