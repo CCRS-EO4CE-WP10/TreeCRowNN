@@ -78,7 +78,7 @@ This model generates predictions of FSD at 12.8m resolution and cannot accept pa
 **Accuracy on Testset:**  
 |*n*|Tile Size|Forest Stand Area (m<sup>2</sup>)|True Total Tree Count|Predicted Total Tree Count|diff|MAE|RMSE|R<sup>2</sup>|
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-|7,457|128|163.84|  126,626 |   |  |2.1|2.7|0.74|
+|7,457|128|163.84|  126,626 | -  | - |2.1|2.7|0.74|
   
 **Assessment of Accuracy Across Forest Conditions:**      
 |*n*|Forest Condition |MAE| MSE|RMSE|R<sup>2</sup>|
